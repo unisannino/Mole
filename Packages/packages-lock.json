@@ -1,5 +1,19 @@
 {
   "dependencies": {
+    "com.cysharp.unitask": {
+      "version": "git+ssh://git@github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask/#2.2.5",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "72e620d169841f32bc6110ad0e12ee9eae6f1aaf"
+    },
+    "com.neuecc.unirx": {
+      "version": "git+ssh://git@github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts#284d5c50d3f1ddd9fa7df3d382ea904732a9c2ff",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "284d5c50d3f1ddd9fa7df3d382ea904732a9c2ff"
+    },
     "com.unity.2d.animation": {
       "version": "7.0.10",
       "depth": 1,
@@ -154,6 +168,13 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.nuget.mono-cecil": {
+      "version": "1.10.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.recorder": {
       "version": "3.0.3",
       "depth": 0,
@@ -250,6 +271,24 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "dev.kyubuns.animetask": {
+      "version": "git+ssh://git@github.com/kyubuns/AnimeTask.git?path=Assets/AnimeTask#v1.13.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask"
+      },
+      "hash": "48862d868578f75bdff7a458517577e2023823fc"
+    },
+    "jp.hadashikick.vcontainer": {
+      "version": "git+ssh://git@github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.11.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.mono-cecil": "1.10.1"
+      },
+      "hash": "80086eec36bc14d0841ffe84aa4a7ce50bf5b613"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
