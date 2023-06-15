@@ -23,6 +23,7 @@ namespace Unisannino.Mole.Runtime.LifetimeScopes
         private void RegisterModels(IContainerBuilder builder)
         {
             builder.Register<GameTimerUseCase>(Lifetime.Scoped);
+            builder.Register<WhackAMoleUseCase>(Lifetime.Scoped);
         }
         
         private void RegisterViews(IContainerBuilder builder)
