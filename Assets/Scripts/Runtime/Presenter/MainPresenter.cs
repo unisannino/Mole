@@ -46,6 +46,9 @@ namespace Unisannino.Mole.Runtime.Presenter
         private async UniTaskVoid StartAsync()
         {
             await _gameUIPanel.PlayStartGameAsync(_cancellationTokenSource.Token);
+            _timerUseCase.StartAsync(_cancellationTokenSource.Token).Forget();
+            await _timerUseCase.WaitTimerCompletedAsync(_cancellationTokenSource.Token);
+            await _gameUIPanel.PlayEndGameAsync(_cancellationTokenSource.Token);
         }
 
         public void Dispose()
