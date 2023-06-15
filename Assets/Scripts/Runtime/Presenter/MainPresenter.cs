@@ -9,7 +9,7 @@ namespace Unisannino.Mole.Runtime.Presenter
 {
     public class MainPresenter : IInitializable, IStartable, ITickable, IDisposable
     {
-        private GameTimerUseCase _gameTimerUseCase;
+        private TimerUseCase _timerUseCase;
         private MoleUseCase _moleUseCase;
         private MoleContainer _moleContainer;
         private GameUIPanel _gameUIPanel;
@@ -17,12 +17,12 @@ namespace Unisannino.Mole.Runtime.Presenter
         private readonly CancellationTokenSource _cancellationTokenSource = new();
         
         public MainPresenter(
-            GameTimerUseCase gameTimerUseCase,
+            TimerUseCase timerUseCase,
             MoleUseCase moleUseCase,
             MoleContainer moleContainer,
             GameUIPanel gameUIPanel)
         {
-            _gameTimerUseCase = gameTimerUseCase;
+            _timerUseCase = timerUseCase;
             _moleUseCase = moleUseCase;
             _moleContainer = moleContainer;
             _gameUIPanel = gameUIPanel;
@@ -46,7 +46,6 @@ namespace Unisannino.Mole.Runtime.Presenter
         private async UniTaskVoid StartAsync()
         {
             await _gameUIPanel.PlayStartGameAsync(_cancellationTokenSource.Token);
-            _gameTimerUseCase.Start();
         }
 
         public void Dispose()
