@@ -2,6 +2,7 @@ using Unisannino.Mole.Runtime.Model;
 using Unisannino.Mole.Runtime.Presenter;
 using Unisannino.Mole.Runtime.View;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
@@ -10,7 +11,7 @@ namespace Unisannino.Mole.Runtime.LifetimeScopes
     public class MainLifetimeScope : LifetimeScope
     {
         [SerializeField] private MoleContainer moleContainer;
-        [SerializeField] private UIPanel uiPanel;
+        [FormerlySerializedAs("uiPanel")] [SerializeField] private GameUIPanel gameUIPanel;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -29,7 +30,7 @@ namespace Unisannino.Mole.Runtime.LifetimeScopes
         private void RegisterViews(IContainerBuilder builder)
         {
             builder.RegisterComponent(moleContainer);
-            builder.RegisterComponent(uiPanel);
+            builder.RegisterComponent(gameUIPanel);
         }
     }
 }
