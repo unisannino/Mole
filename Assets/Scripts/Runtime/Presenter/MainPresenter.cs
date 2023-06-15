@@ -7,18 +7,18 @@ namespace Unisannino.Mole.Runtime.Presenter
     public class MainPresenter : IInitializable, IStartable, ITickable
     {
         private GameTimerUseCase _gameTimerUseCase;
-        private WhackAMoleUseCase _whackAMoleUseCase;
+        private MoleUseCase _moleUseCase;
         private MoleContainer _moleContainer;
         private UIPanel _uiPanel;
 
         public MainPresenter(
             GameTimerUseCase gameTimerUseCase,
-            WhackAMoleUseCase whackAMoleUseCase,
+            MoleUseCase moleUseCase,
             MoleContainer moleContainer,
             UIPanel uiPanel)
         {
             _gameTimerUseCase = gameTimerUseCase;
-            _whackAMoleUseCase = whackAMoleUseCase;
+            _moleUseCase = moleUseCase;
             _moleContainer = moleContainer;
             _uiPanel = uiPanel;
         }

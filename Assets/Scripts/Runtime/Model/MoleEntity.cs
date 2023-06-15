@@ -2,12 +2,11 @@ namespace Unisannino.Mole.Runtime.Model
 {
     public class MoleEntity
     {
-        public int Score { get; private set; }
         public bool CanWhack { get; private set; }
+        public bool IsFever { get; private set; }
         
-        public MoleEntity(int score)
+        public MoleEntity()
         {
-            Score = score;
             CanWhack = false;
         }
         
@@ -16,9 +15,9 @@ namespace Unisannino.Mole.Runtime.Model
             CanWhack = canWhack;
         }
         
-        public void ChangeScore(int score)
+        public void ChangeIsFever(bool isFever)
         {
-            Score = score;
+            IsFever = isFever;
         }
     }
 }
