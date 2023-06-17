@@ -10,10 +10,14 @@ namespace Unisannino.Mole.Runtime.Presenter
 {
     public class MainPresenter : IInitializable, IStartable, ITickable, IDisposable
     {
-        private TimerUseCase _timerUseCase;
-        private MoleUseCase _moleUseCase;
+        // view
         private MoleContainer _moleContainer;
         private GameUIPanel _gameUIPanel;
+
+        // model
+        private TimerUseCase _timerUseCase;
+        private MoleUseCase _moleUseCase;
+        private ScoreUseCase _scoreUseCase;
 
         private CompositeDisposable _compositeDisposable = new();
         private readonly CancellationTokenSource _cancellationTokenSource = new();
@@ -22,12 +26,14 @@ namespace Unisannino.Mole.Runtime.Presenter
             TimerUseCase timerUseCase,
             MoleUseCase moleUseCase,
             MoleContainer moleContainer,
-            GameUIPanel gameUIPanel)
+            GameUIPanel gameUIPanel,
+            ScoreUseCase scoreUseCase)
         {
             _timerUseCase = timerUseCase;
             _moleUseCase = moleUseCase;
             _moleContainer = moleContainer;
             _gameUIPanel = gameUIPanel;
+            _scoreUseCase = scoreUseCase;
         }
 
         public void Initialize()
@@ -38,6 +44,7 @@ namespace Unisannino.Mole.Runtime.Presenter
                 .Subscribe(id =>
                 {
                     _moleUseCase.ChangeCanWhack(id, false);
+                    _scoreUseCase.AddScore(_moleUseCase.GetMoleScore(id));
                 })
                 .AddTo(_compositeDisposable);
         }
