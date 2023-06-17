@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 using UniRx;
 using Unisannino.Mole.Runtime.Model;
 using Unisannino.Mole.Runtime.View;
-using UnityEngine;
+using UnityEngine.U2D;
 using VContainer.Unity;
 
 namespace Unisannino.Mole.Runtime.Presenter
@@ -58,6 +58,7 @@ namespace Unisannino.Mole.Runtime.Presenter
         public void Tick()
         {
             var currentTime = _timerUseCase.CurrentTime;
+            _gameUIPanel.UpdateTimeGauge(currentTime);
             _moleUseCase.CheckSpeedUp(currentTime);
             if (_moleUseCase.CanSpawnMole(currentTime))
             {
