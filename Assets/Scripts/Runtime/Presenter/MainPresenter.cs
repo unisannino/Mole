@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using UniRx;
 using Unisannino.Mole.Runtime.Model;
 using Unisannino.Mole.Runtime.View;
 using VContainer.Unity;
@@ -13,9 +14,10 @@ namespace Unisannino.Mole.Runtime.Presenter
         private MoleUseCase _moleUseCase;
         private MoleContainer _moleContainer;
         private GameUIPanel _gameUIPanel;
-        
+
+        private CompositeDisposable _compositeDisposable = new();
         private readonly CancellationTokenSource _cancellationTokenSource = new();
-        
+
         public MainPresenter(
             TimerUseCase timerUseCase,
             MoleUseCase moleUseCase,
@@ -31,6 +33,13 @@ namespace Unisannino.Mole.Runtime.Presenter
         public void Initialize()
         {
             _moleContainer.Initialize();
+            _moleContainer.OnWhackMoleAsObservable
+                .Where(_moleUseCase.CanWhack)
+                .Subscribe(id =>
+                {
+                    _moleUseCase.ChangeCanWhack(id, false);
+                })
+                .AddTo(_compositeDisposable);
         }
 
         public void Start()
@@ -40,9 +49,16 @@ namespace Unisannino.Mole.Runtime.Presenter
 
         public void Tick()
         {
-            
+            var currentTime = _timerUseCase.CurrentTime;
+            _moleUseCase.CheckSpeedUp(currentTime);
+            if (_moleUseCase.CanSpawnMole(currentTime))
+            {
+                var id = _moleUseCase.SpawnMole();
+                _moleContainer.PresentMole(id, _moleUseCase.CurrentSpeedScale);
+                _moleUseCase.ChangeCanWhack(id, true);
+            }
         }
-        
+
         private async UniTaskVoid StartAsync()
         {
             await _gameUIPanel.PlayStartGameAsync(_cancellationTokenSource.Token);
@@ -54,6 +70,7 @@ namespace Unisannino.Mole.Runtime.Presenter
         public void Dispose()
         {
             _cancellationTokenSource?.Dispose();
+            _compositeDisposable?.Dispose();
         }
     }
 }

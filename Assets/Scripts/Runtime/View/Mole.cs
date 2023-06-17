@@ -24,12 +24,13 @@ namespace Unisannino.Mole.Runtime.View
             _animator = GetComponent<Animator>();
         }
 
-        public void Present()
+        public void Present(float speedScale)
         {
+            _animator.speed = speedScale;
             _animator.SetTrigger(PresentTriggerID);
         }
 
-        public void Dismiss()
+        public void Dismiss(bool isWhacked)
         {
             _animator.SetTrigger(DismissTriggerID);
         }

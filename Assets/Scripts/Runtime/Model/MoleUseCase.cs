@@ -9,6 +9,12 @@ namespace Unisannino.Mole.Runtime.Model
 
         private IList<int> _moleSpawnIndexList;
 
+        private float _spawnInterval;
+        private float _prevSpawnTime;
+        private float _currentSpeedScale;
+
+        public float CurrentSpeedScale => _currentSpeedScale;
+        
         public MoleUseCase(int moleAmount)
         {
             _moleEntities = new MoleEntity[moleAmount];
@@ -17,6 +23,9 @@ namespace Unisannino.Mole.Runtime.Model
                 _moleEntities[i] = new MoleEntity();
             }
             _moleSpawnIndexList = new List<int>(_moleEntities.Length);
+            _prevSpawnTime = 0f;
+            _currentSpeedScale = 1f;
+            _spawnInterval = MasterData.Instance.MoleParameter.DefaultMoleSpawnInterval;
         }
 
         public bool CanWhack(int moleIndex)
@@ -35,6 +44,27 @@ namespace Unisannino.Mole.Runtime.Model
             return _moleEntities[moleIndex].IsFever ? baseScore * 2 : baseScore;
         }
 
+        public void CheckSpeedUp(float currentTime)
+        {
+            var speedUpTimingInterval = MasterData.Instance.MoleParameter.SpeedUpSpawnTimingInterval;
+            var speedUpValue = MasterData.Instance.MoleParameter.SpeedUpValue;
+            if (currentTime % speedUpTimingInterval == 0)
+            {
+                _currentSpeedScale += speedUpValue;
+                _spawnInterval = MasterData.Instance.MoleParameter.DefaultMoleSpawnInterval / _currentSpeedScale;
+            }
+        }
+
+        public bool CanSpawnMole(float currentTime)
+        {
+            var canSpawn = currentTime - _prevSpawnTime >= _spawnInterval;
+            if (canSpawn)
+            {
+                _prevSpawnTime = currentTime;
+            }
+            return canSpawn;
+        }
+
         public int SpawnMole()
         {
             if (_moleSpawnIndexList.Count == 0)
@@ -45,7 +75,7 @@ namespace Unisannino.Mole.Runtime.Model
             _moleSpawnIndexList.RemoveAt(0);
             return spawnIndex;
         }
-        
+
         private void GenerateSpawnList()
         {
             _moleSpawnIndexList.Clear();
